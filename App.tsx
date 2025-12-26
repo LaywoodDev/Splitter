@@ -245,7 +245,7 @@ const App: React.FC = () => {
 
   if (loading) {
       return (
-          <div className="min-h-screen bg-background flex items-center justify-center text-white">
+          <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-white">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
           </div>
       )
@@ -254,19 +254,19 @@ const App: React.FC = () => {
   if (!session || !userProfile) return <Auth />;
 
   return (
-    <div className="min-h-screen bg-background text-white font-sans flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-white font-sans flex flex-col relative overflow-hidden">
       
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
+      <div className="flex-1 overflow-y-auto no-scrollbar pb-32 relative z-10">
         <div className="max-w-md mx-auto min-h-full">
             
             {/* TAB: HOME */}
             {activeTab === 'home' && (
                 <div className="p-6 space-y-12 animate-in fade-in duration-500">
-                    <div className="pt-8">
+                    <div className="pt-8 relative">
                         <div className="flex items-center space-x-2 mb-4">
                              <Avatar name={userProfile.name} src={userProfile.avatar} size="sm" />
-                             <span className="text-zinc-500 text-sm font-medium">Привет, {userProfile.name.split(' ')[0]}</span>
+                             <span className="text-zinc-400 text-sm font-medium">Привет, {userProfile.name.split(' ')[0]}</span>
                         </div>
                         <h1 className={`text-5xl font-medium tracking-tighter ${totalBalance >= 0 ? 'text-white' : 'text-red-500'}`}>
                             {formatMoney(Math.abs(totalBalance))}
@@ -289,8 +289,6 @@ const App: React.FC = () => {
                             <div className="flex flex-col space-y-3">
                                 {expenses.map(expense => {
                                     const myId = userProfile.id;
-                                    
-                                    // Calculate my involvement
                                     const cost = expense.amount / expense.splitBetween.length;
                                     const iPaid = expense.paidBy[myId] || 0;
                                     const iConsumed = expense.splitBetween.includes(myId) ? cost : 0;
@@ -304,10 +302,10 @@ const App: React.FC = () => {
                                         <div 
                                             key={expense.id} 
                                             onClick={() => setSelectedExpense(expense)}
-                                            className="group flex justify-between items-center p-4 bg-zinc-900/40 border border-zinc-800/50 rounded-2xl hover:bg-zinc-800/60 transition cursor-pointer"
+                                            className="group flex justify-between items-center p-4 bg-zinc-900 border border-zinc-800 rounded-2xl active:scale-[0.98] transition-all cursor-pointer"
                                         >
                                             <div className="flex items-center space-x-3">
-                                                <div className="bg-zinc-900 p-2 rounded-full text-lg">
+                                                <div className="bg-zinc-800 p-2 rounded-full text-lg">
                                                     {expense.category === 'food' ? '🍔' : '💸'}
                                                 </div>
                                                 <div>
@@ -342,7 +340,7 @@ const App: React.FC = () => {
                         <div className="space-y-2">
                              <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">Запросы</h3>
                              {requests.map(req => (
-                                <div key={req.id} className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800">
+                                <div key={req.id} className="flex justify-between items-center bg-zinc-900 p-4 rounded-2xl border border-zinc-800">
                                     <div className="flex items-center space-x-3">
                                         <Avatar name={req.sender?.name || '?'} src={req.sender?.avatar} size="sm" />
                                         <span className="text-sm font-bold">{req.sender?.name}</span>
@@ -360,7 +358,7 @@ const App: React.FC = () => {
                             friends.filter(f => !f.isMe).map(friend => {
                                  const bal = balances.find(b => b.friendId === friend.id)?.amount || 0;
                                  return (
-                                    <div key={friend.id} className="flex items-center justify-between p-4 bg-zinc-900/20 rounded-2xl border border-transparent hover:border-zinc-800 transition">
+                                    <div key={friend.id} className="flex items-center justify-between p-4 bg-zinc-900 rounded-2xl border border-zinc-800">
                                         <div className="flex items-center space-x-4">
                                             <Avatar name={friend.name} src={friend.avatar} />
                                             <p className="font-bold text-white">{friend.name}</p>
@@ -393,9 +391,9 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* UNIFIED NAVIGATION BAR */}
+      {/* NAVIGATION BAR */}
       <div className="fixed bottom-6 left-4 right-4 z-50 max-w-md mx-auto">
-         <div className="bg-[#121212]/95 backdrop-blur-2xl border border-zinc-800/80 rounded-2xl h-16 p-1.5 flex items-center justify-between shadow-2xl shadow-black/50 gap-1">
+         <div className="bg-zinc-900/90 backdrop-blur-md border border-zinc-800 rounded-2xl h-16 p-1.5 flex items-center justify-between shadow-2xl gap-1">
              
              <button 
                 onClick={() => setActiveTab('home')}
@@ -414,9 +412,9 @@ const App: React.FC = () => {
              {/* Add Button - Unified Look */}
              <button 
                 onClick={() => setIsAddModalOpen(true)}
-                className={`flex-1 h-full flex items-center justify-center rounded-xl transition-all duration-200 ${isAddModalOpen ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900'}`}
+                className={`flex-1 h-full flex items-center justify-center rounded-xl transition-all duration-200 ${isAddModalOpen ? 'bg-white text-black' : 'text-zinc-500 hover:text-white hover:bg-zinc-800'}`}
              >
-                <Plus className="w-6 h-6" strokeWidth={2} />
+                <Plus className="w-6 h-6" strokeWidth={isAddModalOpen ? 2.5 : 2} />
              </button>
 
              <button 

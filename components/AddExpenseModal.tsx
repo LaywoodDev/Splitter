@@ -47,7 +47,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
   // Calculate total for multi-payer mode
   useEffect(() => {
       if (isMultiPayer) {
-          const total = Object.values(multiPayers).reduce<number>((acc, val) => acc + (parseFloat(val) || 0), 0);
+          const total = Object.values(multiPayers).reduce<number>((acc, val) => acc + (parseFloat(val as string) || 0), 0);
           setAmount(total > 0 ? total.toString() : '');
       }
   }, [multiPayers, isMultiPayer]);
@@ -237,7 +237,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                             value={magicText}
                             onChange={(e) => setMagicText(e.target.value)}
                             placeholder="Например: Я заплатил 500 и Алекс 300 за такси"
-                            className="w-full h-32 bg-zinc-800/50 border border-zinc-700 rounded-2xl p-4 text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all resize-none"
+                            className="w-full h-32 bg-zinc-800/50 border border-zinc-700 rounded-2xl p-4 text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 focus:bg-zinc-800 transition-all resize-none"
                             autoFocus
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -249,7 +249,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                         <button 
                             onClick={handleMagicFill}
                             disabled={!magicText.trim() || isThinking}
-                            className="absolute bottom-3 right-3 bg-white text-black p-2 rounded-lg hover:bg-zinc-200 disabled:opacity-50 transition-colors"
+                            className="absolute bottom-3 right-3 bg-white text-black p-2 rounded-lg hover:bg-zinc-200 disabled:opacity-50 transition-colors shadow-sm"
                         >
                             {isThinking ? <Sparkles className="w-5 h-5 animate-spin" /> : <ArrowUp className="w-5 h-5" />}
                         </button>
@@ -284,7 +284,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                             placeholder="Название (например: Ужин)" 
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-lg text-center text-white placeholder-zinc-600 focus:outline-none focus:border-white transition-colors"
+                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-lg text-center text-white placeholder-zinc-600 focus:outline-none focus:bg-zinc-800 focus:border-zinc-700 transition-all"
                         />
                     </div>
 
@@ -298,13 +298,13 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                                 <div className="flex bg-black rounded-lg p-1">
                                     <button 
                                         onClick={() => setIsMultiPayer(false)}
-                                        className={`p-1.5 rounded-md transition-all ${!isMultiPayer ? 'bg-white text-black shadow-sm' : 'text-zinc-500'}`}
+                                        className={`p-1.5 rounded-md transition-all ${!isMultiPayer ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-white'}`}
                                     >
                                         <User className="w-4 h-4" />
                                     </button>
                                     <button 
                                         onClick={() => setIsMultiPayer(true)}
-                                        className={`p-1.5 rounded-md transition-all ${isMultiPayer ? 'bg-white text-black shadow-sm' : 'text-zinc-500'}`}
+                                        className={`p-1.5 rounded-md transition-all ${isMultiPayer ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-white'}`}
                                     >
                                         <Users className="w-4 h-4" />
                                     </button>
@@ -317,7 +317,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                                         <button 
                                             key={friend.id} 
                                             onClick={() => setSinglePayerId(friend.id)}
-                                            className={`relative rounded-full transition-transform hover:scale-105 ${singlePayerId === friend.id ? 'z-10 scale-110 ring-2 ring-white bg-black' : 'opacity-50'}`}
+                                            className={`relative rounded-full transition-transform hover:scale-105 ${singlePayerId === friend.id ? 'z-10 scale-110 ring-2 ring-white bg-black' : 'opacity-50 hover:opacity-100'}`}
                                         >
                                             <Avatar name={friend.name} src={friend.avatar} size="md" active={singlePayerId === friend.id} />
                                         </button>
@@ -337,7 +337,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                                                     placeholder="0"
                                                     value={multiPayers[friend.id] || ''}
                                                     onChange={(e) => handleMultiPayerChange(friend.id, e.target.value)}
-                                                    className="w-full bg-black/50 border border-zinc-700 rounded-lg py-1 px-2 text-right text-white focus:outline-none focus:border-zinc-500"
+                                                    className="w-full bg-black/50 border border-zinc-700 rounded-lg py-1 px-2 text-right text-white focus:outline-none focus:border-zinc-500 transition-colors"
                                                 />
                                             </div>
                                         </div>
@@ -350,7 +350,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                         <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
                             <button 
                                 onClick={() => setExpandSplit(!expandSplit)}
-                                className="w-full flex items-center justify-between p-4"
+                                className="w-full flex items-center justify-between p-4 hover:bg-zinc-800/50 transition-colors"
                             >
                                 <span className="text-sm font-bold text-zinc-500 uppercase tracking-wide">
                                     Делим на {splitBetween.length === friends.length ? 'всех' : splitBetween.length}
@@ -368,8 +368,8 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
                                                 onClick={() => toggleSplit(friend.id)}
                                                 className={`flex items-center space-x-3 p-2 rounded-lg border transition-all ${
                                                     isSelected 
-                                                    ? 'bg-white border-white' 
-                                                    : 'bg-transparent border-zinc-700'
+                                                    ? 'bg-white border-white shadow-sm' 
+                                                    : 'bg-transparent border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800'
                                                 }`}
                                             >
                                                 <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-black bg-black' : 'border-zinc-600'}`}>
@@ -399,7 +399,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ isOpen, onClos
 
                         <button 
                             onClick={() => setIsMagicMode(true)}
-                            className="px-5 rounded-xl bg-zinc-900 border border-zinc-700/50 flex items-center justify-center text-purple-400 hover:border-purple-500 hover:text-purple-300 hover:bg-purple-500/10 transition-all active:scale-95 group shadow-lg shadow-black/40"
+                            className="px-5 rounded-xl bg-zinc-900 border border-zinc-700 flex items-center justify-center text-purple-400 hover:border-purple-500 hover:text-purple-300 hover:bg-purple-500/10 transition-all active:scale-95 group shadow-sm"
                             title="AI Magic Fill"
                         >
                             <Sparkles className="w-6 h-6 group-hover:animate-pulse" />

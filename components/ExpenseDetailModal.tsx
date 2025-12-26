@@ -27,7 +27,7 @@ export const ExpenseDetailModal: React.FC<ExpenseDetailModalProps> = ({ expense,
                 </p>
             </div>
 
-            <div className="flex justify-between items-center bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+            <div className="flex justify-between items-center bg-zinc-900 p-6 rounded-2xl border border-zinc-800 shadow-sm">
                 <div>
                     <p className="text-xs text-zinc-500 uppercase font-bold mb-1">Сумма</p>
                     <p className="text-3xl font-bold text-white">
@@ -50,7 +50,7 @@ export const ExpenseDetailModal: React.FC<ExpenseDetailModalProps> = ({ expense,
                         {payers.map(([payerId, amount]) => {
                             const payer = friends.find(f => f.id === payerId);
                             return (
-                                <div key={payerId} className="flex justify-between items-center bg-zinc-900/50 p-3 rounded-xl">
+                                <div key={payerId} className="flex justify-between items-center bg-zinc-900/50 p-3 rounded-xl border border-zinc-800">
                                     <div className="flex items-center space-x-3">
                                         <Avatar name={payer?.name || '?'} src={payer?.avatar} size="sm" />
                                         <span className="text-white font-medium">{payer?.name}</span>
@@ -84,7 +84,7 @@ export const ExpenseDetailModal: React.FC<ExpenseDetailModalProps> = ({ expense,
             </div>
 
             <div className="pt-4">
-                 <Button variant="danger" fullWidth onClick={() => { onDelete(expense.id); onClose(); }} className="flex items-center space-x-2">
+                 <Button variant="danger" fullWidth onClick={() => { onDelete(expense.id); onClose(); }} className="flex items-center space-x-2 bg-red-500/10 border-red-500/20 hover:bg-red-500/20">
                     <Trash2 className="w-4 h-4" />
                     <span>Удалить запись</span>
                  </Button>

@@ -47,25 +47,26 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-background text-white">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-zinc-950 text-white">
+      
+      <div className="w-full max-w-sm space-y-10">
         
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tighter mb-2">Split.</h1>
-          <p className="text-zinc-500">
-            {isLogin ? 'Войдите в систему.' : 'Контролируйте расходы.'}
+        <div className="text-center space-y-2">
+          <h1 className="text-5xl font-bold tracking-tighter">Split.</h1>
+          <p className="text-zinc-500 font-medium">
+            {isLogin ? 'С возвращением.' : 'Создать аккаунт.'}
           </p>
         </div>
 
-        <form onSubmit={handleAuth} className="space-y-8">
+        <form onSubmit={handleAuth} className="space-y-6">
           <div className="space-y-4">
             {!isLogin && (
-              <div className="group">
+              <div className="group animate-in slide-in-from-top-2 fade-in">
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="block w-full bg-transparent border-b border-zinc-800 py-3 text-lg text-white placeholder-zinc-700 focus:outline-none focus:border-white transition-colors rounded-none"
+                  className="block w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-5 text-white placeholder-zinc-600 focus:outline-none focus:border-white focus:ring-0 transition-all font-medium"
                   placeholder="Ваше Имя"
                 />
               </div>
@@ -76,8 +77,8 @@ export const Auth: React.FC = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full bg-transparent border-b border-zinc-800 py-3 text-lg text-white placeholder-zinc-700 focus:outline-none focus:border-white transition-colors rounded-none"
-                placeholder="name@example.com"
+                className="block w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-5 text-white placeholder-zinc-600 focus:outline-none focus:border-white focus:ring-0 transition-all font-medium"
+                placeholder="Email"
                 required
               />
             </div>
@@ -87,7 +88,7 @@ export const Auth: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full bg-transparent border-b border-zinc-800 py-3 text-lg text-white placeholder-zinc-700 focus:outline-none focus:border-white transition-colors rounded-none"
+                className="block w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-5 text-white placeholder-zinc-600 focus:outline-none focus:border-white focus:ring-0 transition-all font-medium"
                 placeholder="Пароль"
                 required
                 minLength={6}
@@ -96,27 +97,27 @@ export const Auth: React.FC = () => {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-900/20 border border-red-900/50 text-red-500 text-sm rounded-lg">
+            <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-medium rounded-xl text-center">
               {error}
             </div>
           )}
 
-          <div className="pt-4">
-            <Button type="submit" fullWidth size="lg" disabled={loading} className="group relative overflow-hidden">
+          <div className="pt-2">
+            <Button type="submit" fullWidth size="lg" disabled={loading} className="h-14 text-base rounded-2xl">
               {loading ? (
                  <Loader2 className="animate-spin w-5 h-5" />
               ) : (
                  <span className="flex items-center justify-center">
-                    {isLogin ? 'Войти' : 'Продолжить'} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    {isLogin ? 'Войти' : 'Продолжить'} <ArrowRight className="w-5 h-5 ml-2" />
                  </span>
               )}
             </Button>
             
-            <div className="mt-6 text-center">
+            <div className="mt-8 text-center">
                 <button 
                 type="button"
                 onClick={() => { setIsLogin(!isLogin); setError(null); }}
-                className="text-sm text-zinc-500 hover:text-white transition-colors"
+                className="text-sm font-medium text-zinc-500 hover:text-white transition-colors"
                 >
                 {isLogin ? 'Нет аккаунта? Регистрация' : 'Есть аккаунт? Вход'}
                 </button>

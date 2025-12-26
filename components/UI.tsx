@@ -10,7 +10,7 @@ interface CardProps extends HTMLMotionProps<"div"> {
 export const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => {
   return (
     <motion.div 
-      className={`bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 ${className}`}
+      className={`bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-sm ${className}`}
       {...props}
     >
       {children}
@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({ children, className = '', ...props }
   );
 };
 
-// --- Bottom Sheet Component (New) ---
+// --- Bottom Sheet Component ---
 interface BottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,15 +49,15 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose, child
             onDragEnd={(_, info) => {
               if (info.offset.y > 100) onClose();
             }}
-            className="fixed bottom-0 left-0 right-0 bg-[#0F0F0F] rounded-t-[32px] z-50 border-t border-zinc-800 max-h-[90dvh] flex flex-col shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 bg-zinc-900 rounded-t-[32px] z-50 border-t border-zinc-800 max-h-[90dvh] flex flex-col shadow-2xl"
           >
             {/* Handle */}
             <div className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing">
-              <div className="w-12 h-1.5 bg-zinc-800 rounded-full" />
+              <div className="w-12 h-1 bg-zinc-700 rounded-full" />
             </div>
             
             {title && (
-                <div className="px-6 pb-4 pt-2">
+                <div className="px-6 pb-4 pt-2 border-b border-zinc-800 mx-6 mb-4">
                     <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
                 </div>
             )}
@@ -80,14 +80,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, className = '', variant = 'primary', size = 'md', fullWidth = false, ...props }) => {
-  const baseStyle = "font-medium flex items-center justify-center transition-all outline-none disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyle = "font-medium flex items-center justify-center transition-all outline-none disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden";
   
   const variants = {
-    primary: "bg-white text-black hover:bg-zinc-200 active:scale-[0.98] rounded-xl",
-    secondary: "bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-800 rounded-xl",
-    ghost: "bg-transparent text-zinc-400 hover:text-white rounded-xl",
-    danger: "bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl",
-    icon: "bg-transparent text-white hover:bg-white/10 rounded-full"
+    primary: "bg-white text-black hover:bg-zinc-200 active:scale-[0.98] rounded-xl shadow-sm",
+    secondary: "bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 active:bg-zinc-800 rounded-xl",
+    ghost: "bg-transparent text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-xl",
+    danger: "bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 rounded-xl",
+    icon: "bg-transparent text-white hover:bg-zinc-800 rounded-full"
   };
 
   const sizes = {
@@ -129,7 +129,7 @@ export const Avatar: React.FC<AvatarProps> = ({ name, src, size = 'md', classNam
 
   return (
     <div className={`relative ${className}`}>
-        <div className={`${sizeClasses[size]} rounded-full overflow-hidden flex items-center justify-center font-bold border transition-all ${active ? 'border-white bg-white text-black' : 'border-zinc-800 bg-zinc-900 text-zinc-500'}`}>
+        <div className={`${sizeClasses[size]} rounded-full overflow-hidden flex items-center justify-center font-bold border transition-all ${active ? 'border-white bg-white text-black' : 'border-zinc-800 bg-zinc-800 text-zinc-400'}`}>
         {src ? (
             <img src={src} alt={name} className="w-full h-full object-cover" />
         ) : (
@@ -145,7 +145,7 @@ export const Avatar: React.FC<AvatarProps> = ({ name, src, size = 'md', classNam
 
 // --- Badge ---
 export const Badge: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white text-black border border-white">
+  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-zinc-800 border border-zinc-700 text-zinc-300">
     {children}
   </span>
 );

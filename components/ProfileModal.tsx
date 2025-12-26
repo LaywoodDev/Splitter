@@ -131,9 +131,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
                     name={currentUser.name} 
                     src={currentUser.avatar} 
                     size="2xl" 
-                    className="ring-1 ring-white/10 shadow-2xl transition-transform group-hover:scale-105 rounded-full" 
+                    className="ring-4 ring-zinc-900 transition-transform group-hover:scale-105 rounded-full" 
                 />
-                <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all backdrop-blur-sm border border-white/20">
+                <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all">
                     {isUpdatingAvatar ? <Loader2 className="w-8 h-8 text-white animate-spin" /> : <Camera className="w-8 h-8 text-white" />}
                 </div>
             </div>
@@ -142,7 +142,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
                 <h2 className="text-4xl font-medium tracking-tight text-white">{currentUser.name}</h2>
                 <button 
                     onClick={handleCopy}
-                    className="flex items-center justify-center space-x-2 text-zinc-500 hover:text-zinc-300 transition-colors mx-auto text-sm"
+                    className="flex items-center justify-center space-x-2 text-zinc-500 hover:text-white transition-colors mx-auto text-sm bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800"
                 >
                     <span>{currentUser.email}</span>
                     {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 opacity-50" />}
@@ -150,28 +150,28 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
             </div>
         </div>
 
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
+        <div className="w-full h-px bg-zinc-800" />
 
-        <div className="space-y-2 max-w-sm mx-auto w-full">
-            <button onClick={() => setView('friends')} className="w-full flex items-center justify-between p-4 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900/50 transition-all group">
+        <div className="space-y-3 max-w-sm mx-auto w-full">
+            <button onClick={() => setView('friends')} className="w-full flex items-center justify-between p-4 rounded-xl text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-white transition-all group">
                 <div className="flex items-center space-x-4">
-                    <Users className="w-5 h-5 text-zinc-600 group-hover:text-white transition-colors" />
+                    <Users className="w-5 h-5 text-zinc-500 group-hover:text-white transition-colors" />
                     <span className="font-medium">Мои друзья ({friends.filter(f => !f.isMe).length})</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-zinc-700" />
+                <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-white" />
             </button>
 
-            <button onClick={() => setView('settings')} className="w-full flex items-center justify-between p-4 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900/50 transition-all group">
+            <button onClick={() => setView('settings')} className="w-full flex items-center justify-between p-4 rounded-xl text-zinc-400 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-white transition-all group">
                 <div className="flex items-center space-x-4">
-                    <Settings className="w-5 h-5 text-zinc-600 group-hover:text-white transition-colors" />
+                    <Settings className="w-5 h-5 text-zinc-500 group-hover:text-white transition-colors" />
                     <span className="font-medium">Настройки</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-zinc-700" />
+                <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-white" />
             </button>
             
             <button 
                 onClick={onLogout}
-                className="w-full flex items-center justify-between p-4 rounded-xl text-red-500/80 hover:text-red-500 hover:bg-red-500/5 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-xl text-red-400/80 bg-red-500/5 border border-red-500/10 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-all group mt-6"
             >
                 <div className="flex items-center space-x-4">
                     <LogOut className="w-5 h-5 transition-colors" />
@@ -185,17 +185,17 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
   const renderFriends = () => (
       <div className="space-y-8 max-w-sm mx-auto w-full">
           <div className="flex items-center space-x-4">
-              <button onClick={() => setView('main')} className="p-2 hover:bg-zinc-800 rounded-full transition-colors">
+              <button onClick={() => setView('main')} className="p-2 hover:bg-zinc-900 rounded-full transition-colors text-zinc-400 hover:text-white">
                   <ArrowLeft className="w-6 h-6" />
               </button>
-              <h2 className="text-2xl font-bold">Друзья</h2>
+              <h2 className="text-2xl font-bold text-white">Друзья</h2>
           </div>
 
           <div className="space-y-2">
                 <div className="flex justify-between items-center px-1">
-                     <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Добавить нового</span>
+                     <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Добавить нового</span>
                      {status.msg && (
-                        <span className={`text-[10px] font-bold ${status.type === 'error' ? 'text-red-500' : 'text-green-500'}`}>
+                        <span className={`text-[10px] font-bold ${status.type === 'error' ? 'text-red-400' : 'text-green-400'}`}>
                             {status.msg}
                         </span>
                      )}
@@ -206,7 +206,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="email@example.com"
-                        className="w-full bg-zinc-900/30 border border-zinc-800 focus:border-zinc-600 rounded-xl py-4 px-4 text-white placeholder-zinc-700 outline-none transition-all focus:bg-zinc-900"
+                        className="w-full bg-zinc-900 border border-zinc-800 focus:border-zinc-600 rounded-xl py-4 px-4 text-white placeholder-zinc-600 outline-none transition-all"
                         onKeyDown={(e) => e.key === 'Enter' && handleSendRequest()}
                     />
                     <button 
@@ -220,13 +220,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
             </div>
 
             <div className="space-y-1 pt-4">
-                <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-widest px-1 mb-2">Список ({friends.filter(f => !f.isMe).length})</h3>
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest px-1 mb-2">Список ({friends.filter(f => !f.isMe).length})</h3>
                 {friends.filter(f => !f.isMe).length === 0 ? (
-                    <p className="text-zinc-500 text-sm p-4 text-center border border-zinc-800/50 rounded-xl border-dashed">Пока никого нет</p>
+                    <p className="text-zinc-500 text-sm p-4 text-center border border-zinc-800 rounded-xl border-dashed bg-zinc-900/50">Пока никого нет</p>
                 ) : (
                     <div className="space-y-2">
                         {friends.filter(f => !f.isMe).map(friend => (
-                            <div key={friend.id} className="flex items-center justify-between p-3 bg-zinc-900/40 border border-zinc-800 rounded-xl">
+                            <div key={friend.id} className="flex items-center justify-between p-3 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
                                 <div className="flex items-center space-x-3">
                                     <Avatar name={friend.name} src={friend.avatar} size="md" />
                                     <div>
@@ -236,7 +236,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
                                 </div>
                                 <button 
                                     onClick={() => onRemoveFriend && onRemoveFriend(friend.id)}
-                                    className="p-2 text-zinc-600 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                    className="p-2 text-zinc-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>
@@ -251,10 +251,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
   const renderSettings = () => (
     <div className="space-y-8 max-w-sm mx-auto w-full">
         <div className="flex items-center space-x-4">
-            <button onClick={() => setView('main')} className="p-2 hover:bg-zinc-800 rounded-full transition-colors">
+            <button onClick={() => setView('main')} className="p-2 hover:bg-zinc-900 rounded-full transition-colors text-zinc-400 hover:text-white">
                 <ArrowLeft className="w-6 h-6" />
             </button>
-            <h2 className="text-2xl font-bold">Настройки</h2>
+            <h2 className="text-2xl font-bold text-white">Настройки</h2>
         </div>
 
         <div className="space-y-4">
@@ -264,7 +264,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, friends =
                     type="text" 
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
-                    className="w-full bg-zinc-900/30 border border-zinc-800 focus:border-white rounded-xl py-4 px-4 text-white outline-none transition-all"
+                    className="w-full bg-zinc-900 border border-zinc-800 focus:border-zinc-600 rounded-xl py-4 px-4 text-white outline-none transition-all"
                 />
             </div>
             <Button fullWidth onClick={handleUpdateName} disabled={newName === currentUser.name}>
