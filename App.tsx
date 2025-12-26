@@ -34,14 +34,21 @@ const App: React.FC = () => {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      if (session) fetchUserData(session.user.id);
-      else setLoading(false);
+      if (session) {
+          fetchUserData(session.user.id);
+      } else {
+          setLoading(false);
+      }
+    }).catch(err => {
+        console.error("Auth initialization error:", err);
+        setLoading(false); // Ensure we don't get stuck on loading
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      if (session) fetchUserData(session.user.id);
-      else {
+      if (session) {
+          fetchUserData(session.user.id);
+      } else {
         setFriends([]);
         setExpenses([]);
         setUserProfile(null);
@@ -62,14 +69,16 @@ const App: React.FC = () => {
 
     try {
         const { data: profile } = await supabase.from('profiles').select('*').eq('id', uid).single();
-        setUserProfile(profile);
+        if (profile) {
+            setUserProfile(profile);
+        }
 
         const { data: reqs } = await supabase
             .from('friend_requests')
             .select('*, sender:sender_id(*), receiver:receiver_id(*)')
             .or(`sender_id.eq.${uid},receiver_id.eq.${uid}`);
         
-        const confirmed: Friend[] = [{...profile, isMe: true}];
+        const confirmed: Friend[] = profile ? [{...profile, isMe: true}] : [];
         const pending: FriendRequest[] = [];
 
         reqs?.forEach((req: any) => {
@@ -233,6 +242,14 @@ const App: React.FC = () => {
   }, [expenses, userProfile, friends]);
 
   const totalBalance = balances.reduce((acc, curr) => acc + curr.amount, 0);
+
+  if (loading) {
+      return (
+          <div className="min-h-screen bg-background flex items-center justify-center text-white">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+          </div>
+      )
+  }
 
   if (!session || !userProfile) return <Auth />;
 
